@@ -2,15 +2,15 @@ import asyncio
 import logging
 from quart import Quart, jsonify, Response, request
 
-import config_reader
-from db_manager import db_manager
-from exceptions import TransactionManagerError, TonClientError, MongoError
+from src import config_reader
+from src.db_manager import db_manager
+from src.exceptions import TransactionManagerError, TonClientError, MongoError
 from model import Order
 from tr_manager import tr_manager
 
 app = Quart(__name__)
 logging.basicConfig(level=logging.DEBUG,
-                    filename='logs.log',
+                    filename='../logs.log',
                     filemode='w',
                     format='%(asctime)s - %(message)s')
 

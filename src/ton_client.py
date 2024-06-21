@@ -5,9 +5,9 @@ from abc import ABC, abstractmethod
 from pytoniq import LiteBalancer, BalancerError
 from pytoniq_core import Address
 
-from db_manager import db_manager, DbManager
-from exceptions import CreateClientError, GetTransactionsError, CloseClientError
-from model import TransactionRecord
+from src.db_manager import db_manager, DbManager
+from src.exceptions import CreateClientError, GetTransactionsError, CloseClientError
+from src.model import TransactionRecord
 
 
 class BcClient(ABC):

@@ -1,9 +1,9 @@
 import logging
 
-import config_reader
-from db_manager import db_manager
-from model import TransactionRecord, OrderStatus, Order
-from exceptions import StoreNewTransactionsError, TonClientError, \
+from src import config_reader
+from src.db_manager import db_manager
+from src.model import TransactionRecord, OrderStatus, Order
+from src.exceptions import StoreNewTransactionsError, TonClientError, \
     TransactionManagerError, MongoError, CheckTransactionsError, GetOldLatestTransactionError
 from ton_client import client, BcClient
 from pydantic import ValidationError
