@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ton-pay-service"
+version = "0.1.0"
+description = ""
+authors = ["Aleksandr Shushlonov <sanya8923@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "2.31.0"
+pydantic = "2.7.1"
+pydantic-settings = "2.2.1"
+pytoniq = "0.1.37"
+motor = "3.4.0"
+quart = "^0.19.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+package-mode = false
