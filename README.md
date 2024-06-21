@@ -1,68 +1,44 @@
-# Project Title
+# TON Pay Service
 
-This project is a Python application that interacts with the TON (Telegram Open Network) blockchain and a MongoDB database.
+TON Pay Service is a service for processing payments in the TON network. This project is now packaged in Docker for simplified deployment and management.
 
-# Getting Started
+## Installation and Running
 
-Install poetry:
+1. Install Docker on your machine. Instructions for installing Docker can be found on the [official Docker website](https://docs.docker.com/get-docker/).
 
-`pip install poetry`
+2. Clone the project repository:
 
-Install dependencies:
-
-`poetry install`
-
-Run the application:
-
-`poetry shell`
-
-`python3 main.py`
-
-# Example of .env file:
-
-```
-PAY_ADDRESS="<ton address>"
-DB_CLUSTER_NAME='ton_service_db'
-DATABASE='mongodb://localhost:27017'
-APP_PORT=5002
+```bash
+git clone https://github.com/yourusername/ton-pay-service.git
 ```
 
-# Example of request to service:
+3. Navigate to the project directory:
 
-Create invoice:
-
-```
-{
-	"invoice_id": 4,
-	"value": 200
-}
-```
-Answer:
-```
-{
-	"invoice_id": 4,
-	"status": "new",
-	"value": 200,
-	"value_id": 202
-}
+```bash
+cd ton-pay-service
 ```
 
-Get invoice:
+4. Build the Docker image:
 
+```bash
+docker build -t ton-pay-service .
 ```
-{
-	"invoice_id": 4
-}
-```
-Answer:
-```
-{
-	"invoice_id": 4,
-	"status": "confirm",
-	"value": 200,
-	"value_id": 202
-}
-```
-The system has been tested on testnet and is now running on it. to switch to mainnet change line ton_client.py line 65:
 
-`client = TonClient.from_testnet_config(trust_level=0)` to `client = TonClient.from_mainnet_config(trust_level=0)`
+5. Run the Docker container:
+
+```bash
+docker run -p 5002:5002 ton-pay-service
+```
+
+The application is now accessible at `localhost:5002`.
+
+## Configuration
+
+For service configuration, use the `.env` file. An example configuration can be found in the `.env.example` file.
+
+## Working with the Service
+
+The service provides the following HTTP endpoints:
+
+- `GET /transactions`: Get transaction information.
+- `POST /create_order`: Create a new order.
