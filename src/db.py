@@ -13,51 +13,94 @@ from abc import ABC, abstractmethod
 
 
 class Database(ABC):
+    """
+    An abstract base class that defines the interface for databases.
+
+    """
     @abstractmethod
     async def insert(self, col_name: str, data: dict, max_retries: int = 3, retry_delay: int = 1) -> str:
+        """
+        Inserts a document into a collection.
+        """
         pass
 
     @abstractmethod
     async def insert_many(self, col_name: str, data: list[dict], max_retries: int = 3, retry_delay: int = 1) -> List[
         str]:
+        """
+        Inserts multiple documents into a collection.
+        """
         pass
 
     @abstractmethod
     async def get_one(self, col_name: str, fltr: dict, max_retries: int = 3, retry_delay: int = 1) -> dict | None:
+        """
+        Retrieves a single document from a collection.
+        """
         pass
 
     @abstractmethod
     async def get_many(self, col_name: str, fltr: dict = None, max_retries: int = 3, retry_delay: int = 1) -> List[
                                                                                                                   dict] | None:
+        """
+        Retrieves multiple documents from a collection.
+        """
         pass
 
     @abstractmethod
     async def update_one(self, col_name: str, fltr: dict, update: dict, max_retries: int = 3,
                          retry_delay: int = 1) -> bool | None:
+        """
+        Updates a single document in a collection.
+        """
         pass
 
     @abstractmethod
     async def update_many(self, col_name: str, fltr: dict, update: dict, max_retries: int = 3,
                           retry_delay: int = 1) -> int:
+        """
+        Updates multiple documents in a collection.
+        """
         pass
 
     @abstractmethod
     async def replace_one(self, col_name: str, fltr: dict, replacement: dict, max_retries: int = 3,
                           retry_delay: int = 1) -> bool | None:
+        """
+        Replaces a single document in a collection.
+        """
         pass
 
     @abstractmethod
     async def delete_one(self, col_name: str, fltr: dict, max_retries: int = 3, retry_delay: int = 1) -> bool | None:
+        """
+        Deletes a single document from a collection.
+        """
         pass
 
 
 class Mongo(Database):
+    """
+   A class used to interact with the MongoDB database.
+
+   ...
+
+   Attributes
+   ----------
+   client : motor.motor_asyncio.AsyncIOMotorClient
+       The MongoDB client.
+   db : motor.motor_asyncio.AsyncIOMotorDatabase
+       The MongoDB database.
+    """
     def __init__(self, url: str, database: str):
         self.client = motor.motor_asyncio.AsyncIOMotorClient(url)
         self.db = self.client[database]
 
     async def insert(self, col_name: str, data: dict, max_retries: int = 3,
                      retry_delay: int = 1) -> str:
+        """
+        Inserts a document into a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -74,6 +117,9 @@ class Mongo(Database):
 
     async def insert_many(self, col_name: str, data: list[dict], max_retries: int = 3,
                           retry_delay: int = 1) -> List[str]:
+        """
+        Inserts multiple documents into a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -90,6 +136,9 @@ class Mongo(Database):
 
     async def get_one(self, col_name: str, fltr: dict, sort=None, max_retries: int = 3,
                       retry_delay: int = 1) -> dict | None:
+        """
+        Retrieves a single document from a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -106,6 +155,9 @@ class Mongo(Database):
                     raise GetOneError(error_message) from err
 
     async def get_many(self, col_name: str, fltr: dict = None, max_retries: int = 3, retry_delay: int = 1) -> list:
+        """
+        Retrieves multiple documents from a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -125,6 +177,9 @@ class Mongo(Database):
 
     async def update_one(self, col_name: str, fltr: dict, update: dict,
                          max_retries: int = 3, retry_delay: int = 1) -> bool | None:
+        """
+        Updates a single document in a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -143,6 +198,9 @@ class Mongo(Database):
 
     async def replace_one(self, col_name: str, fltr: dict, replacement: dict,
                           max_retries: int = 3, retry_delay: int = 1) -> bool | None:
+        """
+        Updates multiple documents in a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -161,6 +219,9 @@ class Mongo(Database):
 
     async def update_many(self, col_name: str, fltr: dict, update: dict,
                           max_retries: int = 3, retry_delay: int = 1) -> int:
+        """
+        Replaces a single document in a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:
@@ -176,6 +237,9 @@ class Mongo(Database):
                     raise UpdateError(error_message) from err
 
     async def delete_one(self, col_name: str, fltr: dict, max_retries: int = 3, retry_delay: int = 1) -> bool | None:
+        """
+        Deletes a single document from a collection.
+        """
         retries = 0
         while retries < max_retries:
             try:

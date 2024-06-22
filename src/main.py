@@ -17,12 +17,23 @@ logging.basicConfig(level=logging.DEBUG,
 
 @app.before_serving
 async def startup():
+    """
+    Starts the application.
+    """
     loop = asyncio.get_event_loop()
     loop.create_task(main())
 
 
 @app.route('/transactions', methods=['GET'])
 async def on_get_transactions() -> Response:
+    """
+    Handles the GET request to the /transactions endpoint.
+
+    Returns
+    -------
+    Response
+        The response to the GET request.
+    """
     try:
         data = await request.get_data()
         invoice_id = data.decode()
@@ -41,6 +52,14 @@ async def on_get_transactions() -> Response:
 
 @app.route('/create_order', methods=['POST'])
 async def on_create_order() -> Response:
+    """
+    Handles the POST request to the /create_order endpoint.
+
+    Returns
+    -------
+    Response
+        The response to the POST request.
+    """
     try:
         invoice = Order.deserialize(await request.get_json())
         orders_in_db_list = await db_manager.get_many('orders',
@@ -64,6 +83,9 @@ async def on_create_order() -> Response:
 
 
 async def main():
+    """
+    The main loop of the application.
+    """
     while True:
         await tr_manager.check_transactions_in_bc()
         await asyncio.sleep(60)
